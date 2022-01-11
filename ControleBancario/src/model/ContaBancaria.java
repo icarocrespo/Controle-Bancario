@@ -1,23 +1,24 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author icaro
  */
-public class ContaBancaria {
+public abstract class ContaBancaria implements Serializable {
     
-    private Integer numero;
-    private Date dataAbertura;
-    private Date dataEncerramento;
-    private boolean situacao;
-    private String senha;
-    private Double saldo;
-    private Cliente cliente;
-    private TipoConta TIPOCONTA;
+    public static Integer CONTROLE_NUMERO = 2022;
+    protected Integer numero;
+    protected Date dataAbertura;
+    protected Date dataEncerramento;
+    protected boolean situacao;
+    protected String senha;
+    protected Double saldo;
+    protected Cliente cliente;
     
-    public ContaBancaria(Integer numero, Date dataAbertura, Date dataEncerramento, boolean situacao, String senha, Double saldo, Cliente cliente, TipoConta tipoConta) {
+    public ContaBancaria(Integer numero, Date dataAbertura, Date dataEncerramento, boolean situacao, String senha, Double saldo, Cliente cliente) {
         this.numero = numero;
         this.dataAbertura = dataAbertura;
         this.dataEncerramento = dataEncerramento;
@@ -25,7 +26,7 @@ public class ContaBancaria {
         this.senha = senha;
         this.saldo = saldo;
         this.cliente = cliente;
-        this.TIPOCONTA = tipoConta;
+
     }
 
     public ContaBancaria() {
@@ -85,15 +86,22 @@ public class ContaBancaria {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public TipoConta getTIPOCONTA() {
-        return TIPOCONTA;
-    }
-
-    public void setTIPOCONTA(TipoConta TIPOCONTA) {
-        this.TIPOCONTA = TIPOCONTA;
-    }
+    } 
     
+    public abstract boolean abrirConta();
     
+    public abstract boolean encerrarConta();
+    
+    public abstract boolean validarSenha(String senha);
+    
+    public abstract Double verificarSaldo();
+    
+    public abstract boolean sacarValor(Double valor);
+    
+    public abstract boolean depositarValor(Double valor);
+    
+    protected Integer fornecerNumero(){
+        ContaBancaria.CONTROLE_NUMERO++;
+        return ContaBancaria.CONTROLE_NUMERO;
+    }
 }

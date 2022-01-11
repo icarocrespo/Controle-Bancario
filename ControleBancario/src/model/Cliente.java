@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author icaro
  */
-public class Cliente {
+public class Cliente implements Serializable{
     
     private Pessoa pessoa;
     private Double renda;

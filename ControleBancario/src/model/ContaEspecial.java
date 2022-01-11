@@ -16,7 +16,8 @@ public class ContaEspecial extends ContaCorrente {
         this.numero = fornecerNumero();
     }
 
-    public ContaEspecial(Double limite) {
+    public ContaEspecial(Cliente cliente, Double limite) {
+        super(cliente);
         this.limite = limite;
         this.numero = fornecerNumero();
     }

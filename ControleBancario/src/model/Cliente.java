@@ -2,13 +2,15 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
+import main.Arquivo;
 
 /**
  *
  * @author icaro
  */
-public class Cliente implements Serializable{
-    
+public class Cliente implements Serializable {
+
+    public static String LOCAL = "//arquivos/clientes.bin";
     private Pessoa pessoa;
     private Double renda;
     private Boolean situacao;
@@ -55,7 +57,14 @@ public class Cliente implements Serializable{
     public void setContasBancarias(List<ContaBancaria> contasBancarias) {
         this.contasBancarias = contasBancarias;
     }
-    
-    
-    
+
+    protected boolean serializar(Cliente cliente) {
+        try {
+            Arquivo.gravar(cliente, LOCAL);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

@@ -2,14 +2,16 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import main.Arquivo;
 
 /**
  *
  * @author icaro
  */
 public abstract class ContaBancaria implements Serializable {
-    
+
     public static Integer CONTROLE_NUMERO = 2022;
+    public static String LOCAL = "//arquivos/contas.bin";
     protected Integer numero;
     protected Date dataAbertura;
     protected Date dataEncerramento;
@@ -17,7 +19,7 @@ public abstract class ContaBancaria implements Serializable {
     protected String senha;
     protected Double saldo;
     protected Cliente cliente;
-    
+
     public ContaBancaria(Integer numero, Date dataAbertura, Date dataEncerramento, boolean situacao, String senha, Double saldo, Cliente cliente) {
         this.numero = numero;
         this.dataAbertura = dataAbertura;
@@ -86,22 +88,31 @@ public abstract class ContaBancaria implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    } 
-    
-    public abstract boolean abrirConta();
-    
+    }
+
+    public abstract boolean abrirConta(Cliente cliente);
+
     public abstract boolean encerrarConta();
-    
+
     public abstract boolean validarSenha(String senha);
-    
+
     public abstract Double verificarSaldo();
-    
+
     public abstract boolean sacarValor(Double valor);
-    
+
     public abstract boolean depositarValor(Double valor);
-    
-    protected Integer fornecerNumero(){
+
+    protected Integer fornecerNumero() {
         ContaBancaria.CONTROLE_NUMERO++;
         return ContaBancaria.CONTROLE_NUMERO;
+    }
+
+    protected boolean serializar(ContaBancaria contaBancaria) {
+        try {
+            Arquivo.gravar(contaBancaria, LOCAL);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

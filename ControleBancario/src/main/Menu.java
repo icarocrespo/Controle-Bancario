@@ -17,11 +17,11 @@ public class Menu {
     }
 
     public static void cadastrarMenu() {
-
+        
     }
 
     public static void consultarMenu() {
-
+        
     }
 
     public static void alterarMenu() {

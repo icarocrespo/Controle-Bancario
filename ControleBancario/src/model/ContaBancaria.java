@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import main.Arquivo;
 
@@ -11,7 +12,8 @@ import main.Arquivo;
 public abstract class ContaBancaria implements Serializable {
 
     public static Integer CONTROLE_NUMERO = 2022;
-    public static String LOCAL = "//arquivos/contas.bin";
+    public static String LOCAL = "src\\arquivos\\contas.bin";
+    public static ArrayList<ContaBancaria> CONTAS = new ArrayList<>();
     protected Integer numero;
     protected Date dataAbertura;
     protected Date dataEncerramento;
@@ -107,11 +109,32 @@ public abstract class ContaBancaria implements Serializable {
         return ContaBancaria.CONTROLE_NUMERO;
     }
 
-    protected boolean serializar(ContaBancaria contaBancaria) {
+    public static boolean adicionarConta(ContaBancaria contaBancaria) {
         try {
-            Arquivo.gravar(contaBancaria, LOCAL);
+            CONTAS.add(contaBancaria);
             return true;
         } catch (Exception e) {
+            System.out.println("Falha ao adicionar conta ao escopo global" + e.toString());
+            return false;
+        }
+    }
+
+    public static boolean serializar() {
+        try {
+            Arquivo.gravar(CONTAS, LOCAL);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Falha ao serializar" + e.toString());
+            return false;
+        }
+    }
+
+    public static boolean carregarContas() {
+        try {
+            CONTAS = (ArrayList<ContaBancaria>) Arquivo.ler(LOCAL);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Falha ao carregar as contas bancárias do arquivo" + e.toString());
             return false;
         }
     }

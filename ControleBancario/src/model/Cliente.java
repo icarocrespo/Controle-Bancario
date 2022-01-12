@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import main.Arquivo;
 
@@ -10,13 +11,14 @@ import main.Arquivo;
  */
 public class Cliente implements Serializable {
 
-    public static String LOCAL = "//arquivos/clientes.bin";
+    public static String LOCAL = "src\\arquivos\\clientes.bin";
+    public static ArrayList<Cliente> CLIENTES = new ArrayList<>();
     private Pessoa pessoa;
     private Double renda;
-    private Boolean situacao;
+    private boolean situacao;
     private List<ContaBancaria> contasBancarias;
 
-    public Cliente(Pessoa pessoa, Double renda, Boolean situacao, List<ContaBancaria> contasBancarias) {
+    public Cliente(Pessoa pessoa, Double renda, boolean situacao, List<ContaBancaria> contasBancarias) {
         this.pessoa = pessoa;
         this.renda = renda;
         this.situacao = situacao;
@@ -42,11 +44,11 @@ public class Cliente implements Serializable {
         this.renda = renda;
     }
 
-    public Boolean getSituacao() {
+    public boolean getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(Boolean situacao) {
+    public void setSituacao(boolean situacao) {
         this.situacao = situacao;
     }
 
@@ -58,11 +60,32 @@ public class Cliente implements Serializable {
         this.contasBancarias = contasBancarias;
     }
 
-    protected boolean serializar(Cliente cliente) {
+    public static boolean adicionarCliente(Cliente cliente) {
         try {
-            Arquivo.gravar(cliente, LOCAL);
+            CLIENTES.add(cliente);
             return true;
         } catch (Exception e) {
+            System.out.println("Falha ao adicionar cliente ao escopo global" + e.toString());
+            return false;
+        }
+    }
+
+    public static boolean serializar() {
+        try {
+            Arquivo.gravar(CLIENTES, LOCAL);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Falha ao serializar" + e.toString());
+            return false;
+        }
+    }
+
+    public static boolean carregarContas() {
+        try {
+            CLIENTES = (ArrayList<Cliente>) Arquivo.ler(LOCAL);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Falha ao carregar os clientes do arquivo" + e.toString());
             return false;
         }
     }

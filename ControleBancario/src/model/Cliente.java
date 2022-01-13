@@ -58,7 +58,33 @@ public class Cliente implements Serializable {
     public void setContasBancarias(List<ContaBancaria> contasBancarias) {
         this.contasBancarias = contasBancarias;
     }
-    
+
+    public void exibirCliente() {
+        PessoaFisica pf;
+        PessoaJuridica pj;
+        if (pessoa instanceof PessoaFisica) {
+            pf = (PessoaFisica) pessoa;
+            System.out.println("-----------------");
+            System.out.print("Nome: " + pf.getNome());
+            System.out.println("CPF: " + pf.getCpf());
+            System.out.println("RG: " + pf.getRg());
+            System.out.println("Endereço: " + pf.getEndereco());
+            System.out.println("CEP: " + pf.getCEP());
+            System.out.println("Telefone: " + pf.getTelefone());
+            System.out.println("-----------------");
+        } else {
+            pj = (PessoaJuridica) pessoa;
+            System.out.println("-----------------");
+            System.out.print("Nome: " + pj.getNome());
+            System.out.println("CNPJ" + pj.getCnpj());
+            System.out.println("Endereço: " + pj.getEndereco());
+            System.out.println("CEP: " + pj.getCEP());
+            System.out.println("Telefone: " + pj.getTelefone());
+            System.out.println("-----------------");
+        }
+
+    }
+
     public static boolean adicionarCliente(Cliente cliente) {
         try {
             CLIENTES.add(cliente);

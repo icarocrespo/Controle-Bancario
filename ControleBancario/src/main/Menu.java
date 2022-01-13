@@ -1,5 +1,6 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 import model.Cliente;
 import model.Pessoa;
@@ -163,7 +164,39 @@ public class Menu {
     }
 
     public static void consultarClienteMenu() {
+        String pesquisa;
+        List<Cliente> pesquisaCliente = null;
+        System.out.println("Você acessou a opção 1. Cadastrar cliente.");
 
+        do {
+            System.out.println("Você pode pesquisar clientes sobre 'NOME', 'CPF' e 'CNPJ'.");
+            System.out.println("Para voltar, digite 'sair'.");
+            System.out.print("Informe o texto da pesquisa a seguir: ");
+            pesquisa = x.nextLine();
+
+            if (pesquisa.equals("sair")) {
+                break;
+            }
+
+            for (Cliente c : Cliente.CLIENTES) {
+                if (c.getPessoa() instanceof PessoaFisica) {
+                    PessoaFisica aux = (PessoaFisica) c.getPessoa();
+
+                    if (aux.getNome().contains(pesquisa) || aux.getCpf().contains(pesquisa)) {
+                        pesquisaCliente.add(c);
+                    }
+                } else {
+                    PessoaJuridica aux = (PessoaJuridica) c.getPessoa();
+                    if (aux.getNome().contains(pesquisa) || aux.getCnpj().contains(pesquisa)) {
+                        pesquisaCliente.add(c);
+                    }
+                }
+            }
+
+            for (Cliente c : pesquisaCliente) {
+                c.exibirCliente();
+            }
+        } while (!pesquisa.equals("sair"));
     }
 
     public static void alterarClienteMenu() {

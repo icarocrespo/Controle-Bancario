@@ -1,6 +1,10 @@
 package main;
 
 import java.util.Scanner;
+import model.Cliente;
+import model.Pessoa;
+import model.PessoaFisica;
+import model.PessoaJuridica;
 
 /**
  *
@@ -73,6 +77,103 @@ public class Menu {
         } while (opcao != 0);
     }
 
+    // Submenus de cliente
+    public static void cadastrarClienteMenu() {
+
+        int opcao;
+        Cliente cliente;
+        Double renda;
+
+        System.out.println("Você acessou a opção 1. Cadastrar cliente.");
+
+        do {
+            System.out.println("Para cadastrar um novo cliente preencha as seguintes informações");
+            System.out.print("Você é Pessoa Física (1) ou Pessoa Jurídica (2)? ");
+            opcao = x.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    boolean existeCPF = false;
+
+                    PessoaFisica pf = new PessoaFisica();
+                    System.out.print("Informe o nome: ");
+                    pf.setNome(x.nextLine());
+                    System.out.print("Informe o CPF: ");
+                    pf.setCpf(x.next());
+                    System.out.print("Informe o RG: ");
+                    pf.setRg(x.next());
+                    System.out.print("Informe o endereço: ");
+                    pf.setEndereco(x.nextLine());
+                    System.out.print("Informe o CEP: ");
+                    pf.setCEP(x.next());
+                    System.out.print("Informe o telefone: ");
+                    pf.setTelefone(x.nextLine());
+                    System.out.print("Informe a renda: ");
+                    renda = x.nextDouble();
+
+                    for (Cliente c : Cliente.CLIENTES) {
+                        if (c.getPessoa() instanceof PessoaFisica) {
+                            PessoaFisica aux = (PessoaFisica) c.getPessoa();
+                            pf.getCpf().equals(aux.getCpf());
+                            existeCPF = true;
+                            break;
+                        }
+                    }
+
+                    if (!existeCPF) {
+                        cliente = new Cliente(pf, renda, true);
+                        Cliente.adicionarCliente(cliente);
+                    }
+                    break;
+                case 2:
+                    boolean existeCNPJ = false;
+
+                    PessoaJuridica pj = new PessoaJuridica();
+                    System.out.print("Informe o nome: ");
+                    pj.setNome(x.nextLine());
+                    System.out.print("Informe o CPF: ");
+                    pj.setCnpj(x.next());
+                    System.out.print("Informe o endereço: ");
+                    pj.setEndereco(x.nextLine());
+                    System.out.print("Informe o CEP: ");
+                    pj.setCEP(x.next());
+                    System.out.print("Informe o telefone: ");
+                    renda = x.nextDouble();
+
+                    for (Cliente c : Cliente.CLIENTES) {
+                        if (c.getPessoa() instanceof PessoaJuridica) {
+                            PessoaJuridica aux = (PessoaJuridica) c.getPessoa();
+                            pj.getCnpj().equals(aux.getCnpj());
+                            existeCNPJ = true;
+                            break;
+                        }
+                    }
+
+                    if (!existeCNPJ) {
+                        cliente = new Cliente(pj, renda, true);
+                        Cliente.adicionarCliente(cliente);
+                    }
+
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public static void consultarClienteMenu() {
+
+    }
+
+    public static void alterarClienteMenu() {
+
+    }
+
+    public static void excluirClienteMenu() {
+
+    }
+
     public static void contaMenu() {
         int opcao;
         System.out.println("MENU DA CONTA BANCÁRIA");
@@ -124,22 +225,6 @@ public class Menu {
         } while (opcao != 0);
     }
 
-    public static void cadastrarClienteMenu() {
-
-    }
-
-    public static void consultarClienteMenu() {
-
-    }
-
-    public static void alterarClienteMenu() {
-
-    }
-
-    public static void excluirClienteMenu() {
-
-    }
-
     public static void contaCCmaiorSaldoMenu() {
 
     }
@@ -155,19 +240,19 @@ public class Menu {
     public static void contaCEmaiorSaldoMenu() {
 
     }
-    
+
     public static void contaPFmaiorSaldoMenu() {
 
     }
-    
+
     public static void contaPFmenorSaldoMenu() {
 
     }
-    
+
     public static void contaPJmaiorSaldoMenu() {
 
     }
-    
+
     public static void contaPJmenorSaldoMenu() {
 
     }

@@ -18,11 +18,10 @@ public class Cliente implements Serializable {
     private boolean situacao;
     private List<ContaBancaria> contasBancarias;
 
-    public Cliente(Pessoa pessoa, Double renda, boolean situacao, List<ContaBancaria> contasBancarias) {
+    public Cliente(Pessoa pessoa, Double renda, boolean situacao) {
         this.pessoa = pessoa;
         this.renda = renda;
         this.situacao = situacao;
-        this.contasBancarias = contasBancarias;
     }
 
     public Cliente() {
@@ -59,7 +58,7 @@ public class Cliente implements Serializable {
     public void setContasBancarias(List<ContaBancaria> contasBancarias) {
         this.contasBancarias = contasBancarias;
     }
-
+    
     public static boolean adicionarCliente(Cliente cliente) {
         try {
             CLIENTES.add(cliente);

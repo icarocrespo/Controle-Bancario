@@ -3,6 +3,7 @@ package main;
 import java.util.List;
 import java.util.Scanner;
 import model.Cliente;
+import model.ContaBancaria;
 import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -165,8 +166,37 @@ public class Menu {
 
     public static void consultarClienteMenu() {
         String pesquisa;
+        List<Cliente> clientes = null;
+        System.out.println("Você acessou a opção 2. Cadastrar cliente.");
+
+        do {
+            System.out.println("Para voltar, digite 'sair'.");
+            System.out.print("Confirme sua senha: ");
+            pesquisa = x.nextLine();
+
+            if (pesquisa.equalsIgnoreCase("sair")) {
+                break;
+            }
+
+            for (Cliente c : Cliente.CLIENTES) {
+                for (ContaBancaria cb : c.getContasBancarias()) {
+                    if (cb.getSenha().equals(pesquisa)) {
+                        clientes.add(c);
+                    }
+                }
+            }
+
+            System.out.println("Resutado da pesquisa.");
+            for (Cliente c : clientes) {
+                c.exibirCliente();
+            }
+        } while (!pesquisa.equalsIgnoreCase("sair"));
+    }
+
+    public static void consultarTodosClienteMenu() {
+        String pesquisa;
         List<Cliente> pesquisaCliente = null;
-        System.out.println("Você acessou a opção 1. Cadastrar cliente.");
+        System.out.println("Você acessou a opção 2. Cadastrar cliente.");
 
         do {
             System.out.println("Você pode pesquisar clientes sobre 'NOME', 'CPF' e 'CNPJ'.");
@@ -174,7 +204,7 @@ public class Menu {
             System.out.print("Informe o texto da pesquisa a seguir: ");
             pesquisa = x.nextLine();
 
-            if (pesquisa.equals("sair")) {
+            if (pesquisa.equalsIgnoreCase("sair")) {
                 break;
             }
 
@@ -193,14 +223,80 @@ public class Menu {
                 }
             }
 
+            System.out.println("Resutado da pesquisa.");
             for (Cliente c : pesquisaCliente) {
                 c.exibirCliente();
             }
-        } while (!pesquisa.equals("sair"));
+        } while (!pesquisa.equalsIgnoreCase("sair"));
     }
 
     public static void alterarClienteMenu() {
+        String pesquisa;
+        Cliente cliente = null;
+        Double renda;
+        System.out.println("Você acessou a opção 3. Alter cliente.");
 
+        do {
+            System.out.println("Informe o CNPJ ou CPF do cliente que deseja alterar.");
+            System.out.println("Para voltar, digite 'sair'.");
+            pesquisa = x.nextLine();
+
+            if (pesquisa.equalsIgnoreCase("sair")) {
+                break;
+            }
+
+            for (Cliente c : Cliente.CLIENTES) {
+                if (c.getPessoa() instanceof PessoaFisica) {
+                    PessoaFisica aux = (PessoaFisica) c.getPessoa();
+                    if (aux.getCpf().equals(pesquisa)) {
+                        cliente = c;
+                    }
+                } else {
+                    PessoaJuridica aux = (PessoaJuridica) c.getPessoa();
+                    if (aux.getCnpj().equals(pesquisa)) {
+                        cliente = c;
+                    }
+                }
+            }
+
+            if (cliente != null && cliente.getPessoa() instanceof PessoaFisica) {
+                boolean existeCPF = false;
+
+                PessoaFisica pf = new PessoaFisica();
+                System.out.print("Informe o nome: ");
+                pf.setNome(x.nextLine());
+                System.out.print("Informe o CPF: ");
+                pf.setCpf(x.next());
+                System.out.print("Informe o RG: ");
+                pf.setRg(x.next());
+                System.out.print("Informe o endereço: ");
+                pf.setEndereco(x.nextLine());
+                System.out.print("Informe o CEP: ");
+                pf.setCEP(x.next());
+                System.out.print("Informe o telefone: ");
+                pf.setTelefone(x.nextLine());
+                System.out.print("Informe a renda: ");
+                renda = x.nextDouble();
+
+                for (Cliente c : Cliente.CLIENTES) {
+                    if (c.getPessoa() instanceof PessoaFisica) {
+                        PessoaFisica aux = (PessoaFisica) c.getPessoa();
+                        pf.getCpf().equals(aux.getCpf());
+                        existeCPF = true;
+                        break;
+                    }
+                }
+
+                if (!existeCPF) {
+                    cliente = new Cliente(pf, renda, true);
+                    Cliente.adicionarCliente(cliente);
+                }
+            } else if (cliente != null && cliente.getPessoa() instanceof PessoaJuridica) {
+
+            } else {
+
+            }
+        } while (!pesquisa.equalsIgnoreCase("sair"));
     }
 
     public static void excluirClienteMenu() {

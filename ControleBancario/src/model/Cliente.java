@@ -65,7 +65,7 @@ public class Cliente implements Serializable {
         if (pessoa instanceof PessoaFisica) {
             pf = (PessoaFisica) pessoa;
             System.out.println("-----------------");
-            System.out.print("Nome: " + pf.getNome());
+            System.out.println("Nome: " + pf.getNome());
             System.out.println("CPF: " + pf.getCpf());
             System.out.println("RG: " + pf.getRg());
             System.out.println("Endereço: " + pf.getEndereco());
@@ -75,7 +75,7 @@ public class Cliente implements Serializable {
         } else {
             pj = (PessoaJuridica) pessoa;
             System.out.println("-----------------");
-            System.out.print("Nome: " + pj.getNome());
+            System.out.println("Nome: " + pj.getNome());
             System.out.println("CNPJ" + pj.getCnpj());
             System.out.println("Endereço: " + pj.getEndereco());
             System.out.println("CEP: " + pj.getCEP());
@@ -85,32 +85,32 @@ public class Cliente implements Serializable {
 
     }
 
-    public static boolean adicionarCliente(Cliente cliente) {
+    public static void adicionarCliente(Cliente cliente) {
         try {
             CLIENTES.add(cliente);
-            return true;
+            System.out.println("Cliente adicionado à lista de clientes com sucesso.");
         } catch (Exception e) {
             System.out.println("Falha ao adicionar cliente ao escopo global" + e.toString());
-            return false;
         }
     }
 
-    public static boolean serializar() {
+    public static void serializar() {
         try {
-            Arquivo.gravar(CLIENTES, LOCAL);
-            return true;
+            for (Cliente c : CLIENTES) {
+                Arquivo.gravar(c, LOCAL);
+            }
+            System.out.println("Serialização efetuada com sucesso.");
         } catch (Exception e) {
             System.out.println("Falha ao serializar" + e.toString());
-            return false;
         }
     }
 
-    public static boolean carregarContas() {
+    public static boolean carregarClientes() {
         try {
-            CLIENTES = (ArrayList<Cliente>) Arquivo.ler(LOCAL);
+            CLIENTES.add((Cliente) Arquivo.ler(LOCAL));
             return true;
         } catch (Exception e) {
-            System.out.println("Falha ao carregar os clientes do arquivo" + e.toString());
+            System.out.println("Falha ao carregar os clientes do arquivo " + e.toString());
             return false;
         }
     }

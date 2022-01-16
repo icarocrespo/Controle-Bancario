@@ -16,9 +16,9 @@ public class ContaCorrente extends ContaBancaria {
         this.numero = fornecerNumero();
         boolean abertura = abrirConta(cliente);
     }
-    
+
     public ContaCorrente() {
-        
+
     }
 
     @Override
@@ -69,4 +69,52 @@ public class ContaCorrente extends ContaBancaria {
         }
     }
 
+    public void exibirContaCorrente() {
+        System.out.println("Nome do cliente: " + this.cliente.getPessoa().getNome());
+        System.out.println("Número: " + this.getNumero());
+        System.out.println("Saldo: " + this.saldo);
+        System.out.println("Situação: " + this.situacao);
+        System.out.println("Data de abertura: " + this.dataAbertura);
+        System.out.println("Data de encerramento: " + this.dataEncerramento);
+    }
+
+    public static void maiorSaldo() {
+        ContaCorrente cc = new ContaCorrente();
+        ContaCorrente aux;
+
+        for (ContaBancaria cb : ContaBancaria.CONTAS) {
+            if (cb instanceof ContaCorrente) {
+                aux = (ContaCorrente) cb;
+                if (aux.getSaldo() > cc.getSaldo() || cc.getSaldo() == null) {
+                    cc = aux;
+                }
+            }
+        }
+        if (cc != null) {
+            System.out.println("A conta corrente com maior saldo é:");
+            cc.exibirContaCorrente();
+        } else {
+            System.out.println("Não há conta com maior saldo.");
+        }
+    }
+    
+    public static void menorSaldo() {
+        ContaCorrente cc = new ContaCorrente();
+        ContaCorrente aux;
+
+        for (ContaBancaria cb : ContaBancaria.CONTAS) {
+            if (cb instanceof ContaCorrente) {
+                aux = (ContaCorrente) cb;
+                if (aux.getSaldo() < cc.getSaldo() || cc.getSaldo() == null) {
+                    cc = aux;
+                }
+            }
+        }
+        if (cc != null) {
+            System.out.println("A conta corrente com maior saldo é:");
+            cc.exibirContaCorrente();
+        } else {
+            System.out.println("Não há conta com maior saldo.");
+        }
+    }
 }

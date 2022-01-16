@@ -1,9 +1,11 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import model.Cliente;
 import model.ContaBancaria;
+import model.ContaCorrente;
 import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -55,6 +57,7 @@ public class Menu {
             System.out.println("4. Excluir cliente.");
             System.out.print("Opção: ");
             opcao = x.nextInt();
+            x.nextLine();
 
             switch (opcao) {
                 case 0:
@@ -91,26 +94,32 @@ public class Menu {
         do {
             System.out.println("Para cadastrar um novo cliente preencha as seguintes informações");
             System.out.print("Você é Pessoa Física (1) ou Pessoa Jurídica (2)? ");
+            System.out.println("Para voltar, digite '0'.");
+
             opcao = x.nextInt();
+            x.nextLine();
 
             switch (opcao) {
+                case 0:
+                    System.out.println("Saindo de 1. Cadastrar cliente.");
+                    break;
                 case 1:
                     boolean existeCPF = false;
 
                     PessoaFisica pf = new PessoaFisica();
-                    System.out.print("Informe o nome: ");
+                    System.out.println("Informe o nome: ");
                     pf.setNome(x.nextLine());
-                    System.out.print("Informe o CPF: ");
-                    pf.setCpf(x.next());
-                    System.out.print("Informe o RG: ");
-                    pf.setRg(x.next());
-                    System.out.print("Informe o endereço: ");
+                    System.out.println("Informe o CPF: ");
+                    pf.setCpf(x.nextLine());
+                    System.out.println("Informe o RG: ");
+                    pf.setRg(x.nextLine());
+                    System.out.println("Informe o endereço: ");
                     pf.setEndereco(x.nextLine());
-                    System.out.print("Informe o CEP: ");
-                    pf.setCEP(x.next());
-                    System.out.print("Informe o telefone: ");
+                    System.out.println("Informe o CEP: ");
+                    pf.setCEP(x.nextLine());
+                    System.out.println("Informe o telefone: ");
                     pf.setTelefone(x.nextLine());
-                    System.out.print("Informe a renda: ");
+                    System.out.println("Informe a renda: ");
                     renda = x.nextDouble();
 
                     for (Cliente c : Cliente.CLIENTES) {
@@ -131,15 +140,15 @@ public class Menu {
                     boolean existeCNPJ = false;
 
                     PessoaJuridica pj = new PessoaJuridica();
-                    System.out.print("Informe o nome: ");
+                    System.out.println("Informe o nome: ");
                     pj.setNome(x.nextLine());
-                    System.out.print("Informe o CPF: ");
-                    pj.setCnpj(x.next());
-                    System.out.print("Informe o endereço: ");
+                    System.out.println("Informe o CPF: ");
+                    pj.setCnpj(x.nextLine());
+                    System.out.println("Informe o endereço: ");
                     pj.setEndereco(x.nextLine());
-                    System.out.print("Informe o CEP: ");
-                    pj.setCEP(x.next());
-                    System.out.print("Informe o telefone: ");
+                    System.out.println("Informe o CEP: ");
+                    pj.setCEP(x.nextLine());
+                    System.out.println("Informe o telefone: ");
                     renda = x.nextDouble();
 
                     for (Cliente c : Cliente.CLIENTES) {
@@ -162,16 +171,17 @@ public class Menu {
                     break;
             }
         } while (opcao != 0);
+        Cliente.serializar();
     }
 
     public static void consultarClienteMenu() {
         String pesquisa;
-        List<Cliente> clientes = null;
-        System.out.println("Você acessou a opção 2. Cadastrar cliente.");
+        List<Cliente> clientes = new ArrayList<>();
 
         do {
+            System.out.println("Você acessou a opção 2. Consultar cliente.");
             System.out.println("Para voltar, digite 'sair'.");
-            System.out.print("Confirme sua senha: ");
+            //System.out.print("Confirme sua senha: ");
             pesquisa = x.nextLine();
 
             if (pesquisa.equalsIgnoreCase("sair")) {
@@ -179,16 +189,26 @@ public class Menu {
             }
 
             for (Cliente c : Cliente.CLIENTES) {
-                for (ContaBancaria cb : c.getContasBancarias()) {
-                    if (cb.getSenha().equals(pesquisa)) {
+                if (c.getPessoa() instanceof PessoaFisica) {
+                    PessoaFisica aux = (PessoaFisica) c.getPessoa();
+
+                    if (aux.getNome().contains(pesquisa) || aux.getCpf().contains(pesquisa)) {
+                        clientes.add(c);
+                    }
+                } else {
+                    PessoaJuridica aux = (PessoaJuridica) c.getPessoa();
+                    if (aux.getNome().contains(pesquisa) || aux.getCnpj().contains(pesquisa)) {
                         clientes.add(c);
                     }
                 }
             }
-
-            System.out.println("Resutado da pesquisa.");
-            for (Cliente c : clientes) {
-                c.exibirCliente();
+            if (!clientes.isEmpty()) {
+                System.out.println("Resutado da pesquisa.");
+                for (Cliente c : clientes) {
+                    c.exibirCliente();
+                }
+            } else {
+                System.out.println("Nenhum cliente encontrado.");
             }
         } while (!pesquisa.equalsIgnoreCase("sair"));
     }
@@ -250,11 +270,13 @@ public class Menu {
                     PessoaFisica aux = (PessoaFisica) c.getPessoa();
                     if (aux.getCpf().equals(pesquisa)) {
                         cliente = c;
+                        break;
                     }
                 } else {
                     PessoaJuridica aux = (PessoaJuridica) c.getPessoa();
                     if (aux.getCnpj().equals(pesquisa)) {
                         cliente = c;
+                        break;
                     }
                 }
             }
@@ -265,7 +287,7 @@ public class Menu {
                 PessoaFisica pf = new PessoaFisica();
                 System.out.print("Informe o nome: ");
                 pf.setNome(x.nextLine());
-                System.out.print("Informe o CPF: ");
+                pf.setCpf(((PessoaFisica) cliente.getPessoa()).getCpf());
                 pf.setCpf(x.next());
                 System.out.print("Informe o RG: ");
                 pf.setRg(x.next());
@@ -278,19 +300,9 @@ public class Menu {
                 System.out.print("Informe a renda: ");
                 renda = x.nextDouble();
 
-                for (Cliente c : Cliente.CLIENTES) {
-                    if (c.getPessoa() instanceof PessoaFisica) {
-                        PessoaFisica aux = (PessoaFisica) c.getPessoa();
-                        pf.getCpf().equals(aux.getCpf());
-                        existeCPF = true;
-                        break;
-                    }
-                }
+                cliente.setPessoa(pf);
 
-                if (!existeCPF) {
-                    cliente = new Cliente(pf, renda, true);
-                    Cliente.adicionarCliente(cliente);
-                }
+                //Cliente.CLIENTES.get(0);
             } else if (cliente != null && cliente.getPessoa() instanceof PessoaJuridica) {
 
             } else {
@@ -305,8 +317,9 @@ public class Menu {
 
     public static void contaMenu() {
         int opcao;
-        System.out.println("MENU DA CONTA BANCÁRIA");
         do {
+            System.out.println("MENU DA CONTA BANCÁRIA");
+
             System.out.println("0. Voltar ao menu principal.");
             System.out.println("1. Pesquisar a conta corrente com maior saldo.");
             System.out.println("2. Pesquisar a conta corrente com menor saldo.");
@@ -318,6 +331,7 @@ public class Menu {
             System.out.println("8. Pesquisar o cliente pessoa jurídica com menor saldo, considerando \ntodas as contas bancárias as quais ele está vinculado.");
             System.out.print("Opção: ");
             opcao = x.nextInt();
+            x.nextLine();
 
             switch (opcao) {
                 case 0:
@@ -355,15 +369,21 @@ public class Menu {
     }
 
     public static void contaCCmaiorSaldoMenu() {
-
+        System.out.println("1. Pesquisar a conta corrente com maior saldo.");
+        ContaCorrente.maiorSaldo();
+        contaMenu();
     }
 
     public static void contaCCmenorSaldoMenu() {
-
+        System.out.println("2. Pesquisar a conta corrente com menor saldo.");
+        ContaCorrente.menorSaldo();
+        contaMenu();
     }
 
     public static void contaCPmaiorSaldoMenu() {
-
+        System.out.println("3. Pesquisar a conta poupança com maior saldo.");
+        ContaCorrente.maiorSaldo();
+        contaMenu();
     }
 
     public static void contaCEmaiorSaldoMenu() {

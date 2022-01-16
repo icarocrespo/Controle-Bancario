@@ -115,4 +115,103 @@ public class Cliente implements Serializable {
         }
     }
 
+    public static void contaPFmaiorSaldo() {
+        Double valor = 0D;
+        Double valorAux = 0D;
+        Cliente cliente = new Cliente();
+
+        for (Cliente c : CLIENTES) {
+            if (c.getPessoa() instanceof PessoaFisica) {
+                cliente = c;
+                for (ContaBancaria cb : c.getContasBancarias()) {
+                    valorAux += cb.getSaldo();
+                }
+                if (valorAux > valor) {
+                    valor = valorAux;
+                    valorAux = 0D;
+                }
+            }
+        }
+        if (cliente != null) {
+            System.out.println("Valor total: R$ " + valor);
+            cliente.exibirCliente();
+        } else {
+            System.out.println("Não foram encontrados clientes PF.");
+        }
+    }
+
+    public static void contaPFmenorSaldo() {
+        Double valor = 0D;
+        Double valorAux = 0D;
+        Cliente cliente = new Cliente();
+
+        for (Cliente c : CLIENTES) {
+            if (c.getPessoa() instanceof PessoaFisica) {
+                cliente = c;
+                for (ContaBancaria cb : c.getContasBancarias()) {
+                    valorAux += cb.getSaldo();
+                }
+                if (valorAux < valor) {
+                    valor = valorAux;
+                    valorAux = 0D;
+                }
+            }
+        }
+        if (cliente != null) {
+            System.out.println("Valor total: R$ " + valor);
+            cliente.exibirCliente();
+        } else {
+            System.out.println("Não foram encontrados clientes PF.");
+        }
+    }
+
+    public static void contaPJmaiorSaldo() {
+        Double valor = 0D;
+        Double valorAux = 0D;
+        Cliente cliente = new Cliente();
+
+        for (Cliente c : CLIENTES) {
+            if (c.getPessoa() instanceof PessoaJuridica) {
+                cliente = c;
+                for (ContaBancaria cb : c.getContasBancarias()) {
+                    valorAux += cb.getSaldo();
+                }
+                if (valorAux > valor) {
+                    valor = valorAux;
+                    valorAux = 0D;
+                }
+            }
+        }
+        if (cliente != null) {
+            System.out.println("Valor total: R$ " + valor);
+            cliente.exibirCliente();
+        } else {
+            System.out.println("Não foram encontrados clientes PJ.");
+        }
+    }
+
+    public static void contaPJmenorSaldo() {
+        Double valor = 0D;
+        Double valorAux = 0D;
+        Cliente cliente = new Cliente();
+
+        for (Cliente c : CLIENTES) {
+            if (c.getPessoa() instanceof PessoaJuridica) {
+                cliente = c;
+                for (ContaBancaria cb : c.getContasBancarias()) {
+                    valorAux += cb.getSaldo();
+                }
+                if (valorAux < valor) {
+                    valor = valorAux;
+                    valorAux = 0D;
+                }
+            }
+        }
+        if (cliente != null) {
+            System.out.println("Valor total: R$ " + valor);
+            cliente.exibirCliente();
+        } else {
+            System.out.println("Não foram encontrados clientes PJ.");
+        }
+    }
 }

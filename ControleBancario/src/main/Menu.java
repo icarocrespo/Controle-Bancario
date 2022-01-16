@@ -6,6 +6,7 @@ import java.util.Scanner;
 import model.Cliente;
 import model.ContaBancaria;
 import model.ContaCorrente;
+import model.ContaEspecial;
 import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -387,22 +388,33 @@ public class Menu {
     }
 
     public static void contaCEmaiorSaldoMenu() {
+        System.out.println("4. Pesquisar a conta especial com maior saldo, considerando o limite.");
+        ContaEspecial.menorSaldo();
+        contaMenu();
 
     }
 
     public static void contaPFmaiorSaldoMenu() {
-
+        System.out.println("5. Pesquisar o cliente pessoa física com maior saldo, considerando \ntodas as contas bancárias as quais ele está vinculado.");
+        Cliente.contaPFmaiorSaldo();
+        contaMenu();
     }
 
     public static void contaPFmenorSaldoMenu() {
-
+        System.out.println("6. Pesquisar o cliente pessoa física com menor saldo, considerando \ntodas as contas bancárias as quais ele está vinculado.");
+        Cliente.contaPFmenorSaldo();
+        contaMenu();
     }
 
     public static void contaPJmaiorSaldoMenu() {
-
+        System.out.println("7. Pesquisar o cliente pessoa jurídica com maior saldo, considerando \ntodas as contas bancárias as quais ele está vinculado.");
+        Cliente.contaPJmaiorSaldo();
+        contaMenu();
     }
 
     public static void contaPJmenorSaldoMenu() {
-
+        System.out.println("8. Pesquisar o cliente pessoa jurídica com menor saldo, considerando \ntodas as contas bancárias as quais ele está vinculado.");
+        Cliente.contaPJmenorSaldo();
+        contaMenu();
     }
 }

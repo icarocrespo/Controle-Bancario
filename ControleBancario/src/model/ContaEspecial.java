@@ -25,7 +25,6 @@ public class ContaEspecial extends ContaCorrente {
     public ContaEspecial(){
         this.numero = fornecerNumero();
     }
-
     
     public Double getLimite() {
         return limite;
@@ -51,6 +50,26 @@ public class ContaEspecial extends ContaCorrente {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    public static void menorSaldo() {
+        ContaEspecial ce = new ContaEspecial();
+        ContaEspecial aux;
+
+        for (ContaBancaria cb : ContaBancaria.CONTAS) {
+            if (cb instanceof ContaEspecial) {
+                aux = (ContaEspecial) cb;
+                if ((aux.getSaldo() + aux.getLimite()) < (ce.getSaldo() + ce.getLimite())|| ce.getSaldo() == null) {
+                    ce = aux;
+                }
+            }
+        }
+        if (ce != null) {
+            System.out.println("A conta especial com maior saldo é:");
+            ce.exibirContaCorrente();
+        } else {
+            System.out.println("Não há conta com menor saldo.");
         }
     }
 }

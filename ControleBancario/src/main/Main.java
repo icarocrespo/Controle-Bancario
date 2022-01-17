@@ -1,12 +1,7 @@
 package main;
 
-import java.io.FileNotFoundException;
 import model.Cliente;
 
-/**
- *
- * @author icaro
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +14,7 @@ public class Main {
 //            
 //        }
         
-                    Cliente.carregarClientes();
+        Cliente.carregarClientes();
 
         
         Menu.principalMenu();

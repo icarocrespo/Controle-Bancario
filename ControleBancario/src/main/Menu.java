@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import model.Cliente;
-import model.ContaBancaria;
 import model.ContaCorrente;
 import model.ContaEspecial;
-import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
 
-/**
- *
- * @author icaro
- */
 public class Menu {
 
     static Scanner x = new Scanner(System.in);
@@ -313,6 +307,21 @@ public class Menu {
     }
 
     public static void excluirClienteMenu() {
+        String opcao;
+
+        do {
+            System.out.println("Você acessou a opção 4. Excluir cliente.");
+            System.out.println("Informe o CPF ou CNPJ do cliente.");
+            System.out.println("Para voltar, digite 'sair'.");
+            opcao = x.nextLine();
+
+            if (opcao.equalsIgnoreCase("sair")) {
+                break;
+            }
+
+            Cliente.excluirCliente(opcao);
+            Cliente.serializar();
+        } while (!opcao.equalsIgnoreCase("sair"));
 
     }
 

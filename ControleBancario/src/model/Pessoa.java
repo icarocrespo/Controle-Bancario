@@ -2,10 +2,6 @@ package model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author icaro
- */
 public abstract class Pessoa implements Serializable{
     
     protected String nome;

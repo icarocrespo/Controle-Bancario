@@ -2,10 +2,6 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author icaro
- */
 public class ContaEspecial extends ContaCorrente {
 
     private Double limite;

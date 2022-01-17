@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import main.Arquivo;
 
-/**
- *
- * @author icaro
- */
 public class Cliente implements Serializable {
 
     public static String LOCAL = "src\\arquivos\\clientes.bin";
@@ -91,6 +87,30 @@ public class Cliente implements Serializable {
             System.out.println("Cliente adicionado à lista de clientes com sucesso.");
         } catch (Exception e) {
             System.out.println("Falha ao adicionar cliente ao escopo global" + e.toString());
+        }
+    }
+    
+    public static void excluirCliente(String identificador){
+        try{
+            for(Cliente c : CLIENTES){
+                if(c.getPessoa() instanceof PessoaFisica){
+                    PessoaFisica clientePF = (PessoaFisica) c.getPessoa();
+                    if(clientePF.getCpf().equals(identificador)){
+                        CLIENTES.remove(c);
+                        System.out.println("Cliente removido com sucesso.");
+                        break;
+                    }
+                }else{
+                    PessoaJuridica clientePJ = (PessoaJuridica) c.getPessoa();
+                    if(clientePJ.getCnpj().equals(identificador)){
+                        CLIENTES.remove(c);
+                        System.out.println("Cliente removido com sucesso.");
+                        break;
+                    }
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Não foi possível excluir o cliente de CPF ou CNPJ: " + identificador);
         }
     }
 

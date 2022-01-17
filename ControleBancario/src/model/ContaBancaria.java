@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import main.Arquivo;
 
-/**
- *
- * @author icaro
- */
 public abstract class ContaBancaria implements Serializable {
 
     public static Integer CONTROLE_NUMERO = 2022;

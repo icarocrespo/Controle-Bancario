@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author icaro
- */
 public class PessoaFisica extends Pessoa {
     
     private String cpf;
